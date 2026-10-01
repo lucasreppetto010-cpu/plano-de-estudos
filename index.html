@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rota Dev: Plano de Estudos</title>
+  <meta name="description" content="Plano de estudos gratuito com vídeo aulas do YouTube e exercícios: do JavaScript até uma plataforma de vendas, mais inglês para devs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121a30;
+      --card: #161f3a;
+      --border: #26304f;
+      --text: #e7ebf5;
+      --muted: #9aa4c0;
+      --accent: #7c5cff;
+      --accent-2: #22d3ee;
+      --ok: #34d399;
+      --warn: #fbbf24;
+      --yt: #ff3b3b;
+      --en: #60a5fa;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    code {
+      font-family: "JetBrains Mono", monospace; font-size: .85em;
+      background: rgba(124, 92, 255, .15); color: #c9bcff;
+      padding: 1px 6px; border-radius: 5px;
+    }
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+    /* ---------- Topo ---------- */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(11, 16, 32, .85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+    .logo { font-weight: 800; text-decoration: none; font-size: 1.1rem; }
+    .logo span { color: var(--accent-2); }
+    nav ul { display: flex; gap: 20px; list-style: none; }
+    nav ul a { text-decoration: none; color: var(--muted); font-size: .95rem; }
+    nav ul a:hover { color: var(--text); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 80px 0 60px; text-align: center; }
+    .tag {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      background: rgba(124, 92, 255, .15); color: #b7a6ff;
+      font-size: .85rem; font-weight: 600; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.15; font-weight: 800; }
+    .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { color: var(--muted); max-width: 640px; margin: 20px auto 32px; font-size: 1.1rem; }
+    .btn {
+      display: inline-block; padding: 14px 26px; border-radius: 10px;
+      background: var(--accent); color: #fff; font-weight: 600; text-decoration: none;
+      transition: transform .15s, opacity .15s;
+    }
+    .btn:hover { transform: translateY(-2px); opacity: .92; }
+    .btn.en { background: var(--en); color: #0b1020; margin-left: 8px; }
+
+    .route {
+      margin-top: 48px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+      font-family: "JetBrains Mono", monospace; font-size: .85rem;
+    }
+    .route span { padding: 6px 12px; border-radius: 8px; background: var(--bg-soft); border: 1px solid var(--border); }
+    .route .arrow { background: none; border: none; color: var(--muted); padding: 6px 0; }
+
+    /* ---------- Seções ---------- */
+    section { padding: 64px 0; }
+    section.alt { background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin-bottom: 8px; }
+    .section-sub { color: var(--muted); margin-bottom: 32px; max-width: 720px; }
+    .sub-title { font-size: 1.25rem; font-weight: 700; margin: 40px 0 16px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .card .icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .card p { color: var(--muted); font-size: .95rem; }
+
+    /* Rotina diária de inglês */
+    .routine { list-style: none; display: grid; gap: 10px; }
+    .routine li {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+    }
+    .routine .min {
+      flex-shrink: 0; font-family: "JetBrains Mono", monospace; font-size: .85rem;
+      background: rgba(96, 165, 250, .15); color: var(--en); padding: 4px 10px; border-radius: 8px;
+    }
+    .routine p { color: var(--muted); font-size: .93rem; }
+
+    /* ---------- Progresso ---------- */
+    .progress-box {
+      position: sticky; top: 70px; z-index: 5;
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 18px; margin-bottom: 28px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    section.alt .progress-box { background: var(--bg); }
+    .progress-box strong { white-space: nowrap; font-size: .95rem; }
+    .bar { flex: 1; min-width: 140px; height: 10px; background: var(--border); border-radius: 999px; overflow: hidden; }
+    .bar div { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--ok)); transition: width .3s; }
+    .reset { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-size: .85rem; }
+    .reset:hover { color: var(--text); }
+
+    /* ---------- Fases ---------- */
+    .phase {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+    }
+    .phase-head { padding: 22px 22px 16px; border-bottom: 1px solid var(--border); }
+    .phase-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+    .pill { font-size: .78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: rgba(34, 211, 238, .12); color: var(--accent-2); }
+    .pill.num { background: rgba(124, 92, 255, .18); color: #b7a6ff; }
+    .phase-head h3 { font-size: 1.3rem; }
+    .phase-head p { color: var(--muted); margin-top: 6px; }
+
+    .topics { list-style: none; }
+    .topic-item { border-bottom: 1px solid var(--border); }
+    .topic-item:last-child { border-bottom: none; }
+    .topic { display: flex; align-items: center; gap: 14px; padding: 14px 22px; }
+    .topic input { width: 20px; height: 20px; accent-color: var(--ok); cursor: pointer; flex-shrink: 0; }
+    .topic .info { flex: 1; min-width: 0; cursor: pointer; }
+    .topic .name { font-weight: 600; }
+    .topic .why { color: var(--muted); font-size: .9rem; }
+    .topic.done .name { text-decoration: line-through; color: var(--muted); }
+    .actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .watch, .practice {
+      display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+      font-weight: 600; font-size: .85rem; padding: 8px 14px; border-radius: 8px;
+      text-decoration: none; transition: opacity .15s; cursor: pointer; font-family: inherit;
+    }
+    .watch { background: var(--yt); color: #fff; border: none; }
+    .practice { background: transparent; color: var(--ok); border: 1px solid rgba(52, 211, 153, .5); }
+    .practice[aria-expanded="true"] { background: rgba(52, 211, 153, .12); }
+    .watch:hover, .practice:hover { opacity: .85; }
+
+    /* ---------- Exercícios ---------- */
+    .ex-panel { background: var(--bg-soft); border-top: 1px dashed var(--border); padding: 16px 22px 20px; }
+    .ex-panel[hidden] { display: none; }
+    .ex-title { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ok); margin-bottom: 10px; }
+    .ex-list { list-style: none; display: grid; gap: 10px; counter-reset: ex; }
+    .ex {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+      counter-increment: ex;
+    }
+    .ex-row { display: flex; gap: 12px; align-items: flex-start; }
+    .ex-row input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--ok); cursor: pointer; flex-shrink: 0; }
+    .ex-row label { cursor: pointer; font-size: .95rem; }
+    .ex-row label::before { content: counter(ex) ". "; color: var(--muted); font-weight: 600; }
+    .ex.done .ex-row label { color: var(--muted); text-decoration: line-through; }
+    .ex details { margin: 8px 0 0 30px; }
+    .ex summary { cursor: pointer; font-size: .85rem; font-weight: 600; color: var(--muted); }
+    .ex summary:hover { color: var(--text); }
+    .ex details.sol summary { color: var(--accent-2); }
+    .ex details p { color: var(--muted); font-size: .9rem; margin-top: 6px; }
+    pre {
+      margin-top: 8px; background: #070b17; border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px 14px; overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: .82rem;
+      line-height: 1.55; color: #d6defa;
+    }
+
+    .project, .alert {
+      margin: 0 22px 22px; padding: 14px 16px; border-radius: 10px; font-size: .95rem;
+    }
+    .topics + .project, .topics + .alert { margin-top: 18px; }
+    .project { background: rgba(52, 211, 153, .08); border: 1px dashed rgba(52, 211, 153, .5); }
+    .project b { color: var(--ok); }
+    .alert { background: rgba(251, 191, 36, .08); border: 1px dashed rgba(251, 191, 36, .5); }
+    .alert b { color: var(--warn); }
+
+    /* Trilha de inglês com cor própria */
+    #ingles .pill.num { background: rgba(96, 165, 250, .18); color: var(--en); }
+    #ingles .grad { background: linear-gradient(90deg, var(--en), var(--ok)); -webkit-background-clip: text; background-clip: text; }
+
+    /* ---------- Canais ---------- */
+    .channel { text-decoration: none; display: block; transition: transform .15s, border-color .15s; }
+    .channel:hover { transform: translateY(-3px); border-color: var(--yt); }
+    .channel .go { color: var(--yt); font-weight: 600; font-size: .9rem; margin-top: 10px; display: block; }
+
+    /* ---------- Rodapé ---------- */
+    footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; color: var(--muted); font-size: .9rem; }
+
+    /* ---------- Celular ---------- */
+    @media (max-width: 680px) {
+      nav ul { gap: 14px; }
+      nav ul li.hide-sm { display: none; }
+      .hero { padding: 56px 0 40px; }
+      .btn.en { margin: 10px 0 0; }
+      .topic { flex-wrap: wrap; padding: 14px 16px; }
+      .topic .info { flex-basis: calc(100% - 40px); }
+      .actions { margin-left: 34px; flex-wrap: wrap; }
+      .ex-panel { padding: 14px 16px 18px; }
+      .ex details { margin-left: 0; }
+      .phase-head { padding: 18px 16px 14px; }
+      .project, .alert { margin: 0 16px 16px; }
+      .progress-box { top: 66px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="container">
+      <a href="#" class="logo">Rota<span>Dev</span></a>
+      <ul>
+        <li class="hide-sm"><a href="#como-estudar">Como estudar</a></li>
+        <li><a href="#cronograma">Programação</a></li>
+        <li><a href="#ingles">Inglês</a></li>
+        <li class="hide-sm"><a href="#canais">Canais</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <span class="tag">100% gratuito · vídeo aulas + exercícios</span>
+        <h1>Do JavaScript até uma <span class="grad">plataforma de vendas</span>, falando inglês</h1>
+        <p>Assista a aula, faça os exercícios, marque como feito. Um plano de ~12 semanas para programar de verdade e destravar o inglês ao mesmo tempo.</p>
+        <a href="#cronograma" class="btn">💻 Programação</a>
+        <a href="#ingles" class="btn en">🇺🇸 Inglês</a>
+
+        <div class="route">
+          <span>JS</span><span class="arrow">→</span>
+          <span>Git</span><span class="arrow">→</span>
+          <span>Node</span><span class="arrow">→</span>
+          <span>Banco</span><span class="arrow">→</span>
+          <span>Login</span><span class="arrow">→</span>
+          <span>React/Next</span><span class="arrow">→</span>
+          <span>Pagamento</span><span class="arrow">→</span>
+          <span>Deploy</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO ESTUDAR -->
+    <section id="como-estudar">
+      <div class="container">
+        <h2 class="section-title">Como estudar</h2>
+        <p class="section-sub">O ciclo de cada tópico: <b>▶ assistir → 📝 praticar → ✅ marcar</b>. Isso vale mais do que qualquer curso.</p>
+        <div class="grid">
+          <div class="card">
+            <div class="icon">⏰</div>
+            <h3>2h programação + 45min inglês</h3>
+            <p>5 a 6 dias por semana. Constância vence maratona.</p>
+          </div>
+          <div class="card">
+            <div class="icon">📝</div>
+            <h3>Só avance depois de praticar</h3>
+            <p>Assistiu a aula? Abra "Praticar" e faça os exercícios <b>antes</b> de ir para o próximo tópico.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🧠</div>
+            <h3>Tente 20 min antes da solução</h3>
+            <p>Travou? Veja a dica. Ainda travou? Veja a solução, apague e refaça do zero sem olhar.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🤖</div>
+            <h3>Claude como professor</h3>
+            <p>Peça "me explica linha por linha" ou "por que deu esse erro?", não só "faz pra mim".</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRONOGRAMA DE PROGRAMAÇÃO -->
+    <section id="cronograma" class="alt">
+      <div class="container">
+        <h2 class="section-title">💻 Programação</h2>
+        <p class="section-sub">Clique em <b style="color:var(--yt)">▶ Assistir</b> para abrir as aulas no YouTube e em <b style="color:var(--ok)">📝 Praticar</b> para ver os exercícios. Seu progresso fica salvo neste navegador.</p>
+
+        <div class="progress-box">
+          <strong id="dev-progress-text">0 de 0</strong>
+          <div class="bar"><div id="dev-progress-bar"></div></div>
+          <button class="reset" data-reset="dev">Zerar</button>
+        </div>
+
+        <div id="dev-phases"></div>
+      </div>
+    </section>
+
+    <!-- INGLÊS -->
+    <section id="ingles">
+      <div class="container">
+        <h2 class="section-title">🇺🇸 Inglês que <span class="grad">funciona</span></h2>
+        <p class="section-sub">Resultado vem de três coisas: <b>ouvir muito</b>, <b>falar desde o primeiro dia</b> e <b>revisar todo dia</b>. Gramática é só o apoio. Faça em paralelo com a programação.</p>
+
+        <div class="grid">
+          <div class="card">
+            <div class="icon">🎙️</div>
+            <h3>Grave-se no dia 1</h3>
+            <p>Grave 1 minuto se apresentando em inglês. Grave de novo nas semanas 4, 8 e 12 e compare. É assim que você <b>vê</b> o resultado.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🚫</div>
+            <h3>Pare de traduzir</h3>
+            <p>Aprenda frases inteiras ("chunks"), não palavras soltas. Legenda sempre em inglês, nunca em português.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🗣️</div>
+            <h3>Fale todo dia</h3>
+            <p>Mesmo sozinho. Use o modo de voz do Claude como parceiro de conversa e peça para ele corrigir você.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🔁</div>
+            <h3>Anki todo dia</h3>
+            <p>App gratuito de revisão espaçada (versão para PC e Android). 10 minutos por dia, sem pular.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-title">Rotina diária de 45 minutos</h3>
+        <ul class="routine">
+          <li><span class="min">10 min</span><div><b>Anki</b><p>Revise os cartões do dia e crie novos com frases que você ouviu.</p></div></li>
+          <li><span class="min">15 min</span><div><b>Ouvir (input)</b><p>Um vídeo do tópico da semana com legenda em inglês. Anote 3 frases úteis.</p></div></li>
+          <li><span class="min">10 min</span><div><b>Shadowing</b><p>Repita em voz alta junto com o áudio, imitando ritmo e entonação.</p></div></li>
+          <li><span class="min">10 min</span><div><b>Falar</b><p>Converse com o Claude em inglês (modo de voz) ou grave áudios respondendo perguntas.</p></div></li>
+        </ul>
+
+        <div class="progress-box" style="margin-top:40px">
+          <strong id="en-progress-text">0 de 0</strong>
+          <div class="bar"><div id="en-progress-bar"></div></div>
+          <button class="reset" data-reset="en">Zerar</button>
+        </div>
+
+        <div id="en-phases"></div>
+      </div>
+    </section>
+
+    <!-- CANAIS -->
+    <section id="canais" class="alt">
+      <div class="container">
+        <h2 class="section-title">Canais para acompanhar sempre</h2>
+        <p class="section-sub">Inscreva-se e ative o sininho 🔔</p>
+        <h3 class="sub-title" style="margin-top:0">💻 Programação</h3>
+        <div class="grid" id="dev-channels"></div>
+        <h3 class="sub-title">🇺🇸 Inglês</h3>
+        <div class="grid" id="en-channels"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Feito para estudar 💜 · Dedicação todo dia vence talento.
+    </div>
+  </footer>
+
+  <script>
+    // Monta o link de busca do YouTube a partir de um texto
+    const yt = (busca) => "https://www.youtube.com/results?search_query=" + encodeURIComponent(busca);
+
+    /*
+      Todo o conteúdo fica nestas listas. Para mudar a página, é só editar os dados.
+      Cada tópico tem uma lista "ex" de exercícios:
+        { t: "enunciado", dica: "opcional", sol: `código opcional` }
+      No enunciado, o texto entre crases vira código: "use `map`".
+    */
+
+    // ======================= PROGRAMAÇÃO =======================
+    const fasesDev = [
+      {
+        titulo: "JavaScript de verdade",
+        semanas: "Semanas 1 a 3",
+        descricao: "É a base de tudo. Nada de framework ainda: entender bem o JavaScript deixa todo o resto mais fácil.",
+        topicos: [
+          {
+            nome: "JS moderno: let/const, arrow function, destructuring, spread",
+            porque: "É a sintaxe que você vai ver em todo código atual.",
+            busca: "Matheus Battisti curso JavaScript",
+            ex: [
+              { t: "Converta `function soma(a, b) { return a + b }` para arrow function.",
+                sol: `const soma = (a, b) => a + b;
+
+console.log(soma(2, 3)); // 5` },
+              { t: "Dado `const produto = { nome: \"Ebook JS\", preco: 29.9, autor: \"Lucas\" }`, use destructuring para criar as variáveis `nome` e `preco` numa linha só.",
+                sol: `const produto = { nome: "Ebook JS", preco: 29.9, autor: "Lucas" };
+const { nome, preco } = produto;
+
+console.log(nome, preco); // Ebook JS 29.9` },
+              { t: "Junte os arrays `[1, 2]` e `[3, 4]` em um só usando spread.",
+                sol: `const a = [1, 2];
+const b = [3, 4];
+const juntos = [...a, ...b];
+
+console.log(juntos); // [1, 2, 3, 4]` },
+              { t: "Crie uma cópia do `produto` com o preço alterado para 19.9, sem modificar o original.",
+                dica: "Spread também funciona em objetos. A propriedade que vem depois sobrescreve a anterior.",
+                sol: `const promo = { ...produto, preco: 19.9 };
+
+console.log(produto.preco); // 29.9 (original intacto)
+console.log(promo.preco);   // 19.9` },
+              { t: "Com template string, mostre: `O Ebook JS custa R$ 29.90` (sempre com 2 casas decimais).",
+                dica: "Use `toFixed(2)` no número.",
+                sol: `const { nome, preco } = produto;
+console.log(\`O \${nome} custa R$ \${preco.toFixed(2)}\`);` }
+            ]
+          },
+          {
+            nome: "Arrays: map, filter, reduce, find",
+            porque: "Usado o tempo todo para listar produtos, filtrar e somar o carrinho.",
+            busca: "map filter reduce javascript",
+            ex: [
+              { t: "Copie este array para usar nos exercícios abaixo e crie, com `map`, um novo array só com os nomes.",
+                sol: `const produtos = [
+  { nome: "Ebook JS",    preco: 29.9, tipo: "ebook" },
+  { nome: "Curso Node",  preco: 197,  tipo: "curso" },
+  { nome: "Ebook CSS",   preco: 19.9, tipo: "ebook" },
+  { nome: "Curso React", preco: 297,  tipo: "curso" }
+];
+
+const nomes = produtos.map(p => p.nome);
+console.log(nomes); // ["Ebook JS", "Curso Node", "Ebook CSS", "Curso React"]` },
+              { t: "Com `filter`, pegue só os produtos do tipo `\"curso\"`.",
+                sol: `const cursos = produtos.filter(p => p.tipo === "curso");` },
+              { t: "Com `reduce`, calcule o valor total de todos os produtos.",
+                dica: "O reduce recebe (acumulador, item) e um valor inicial: 0.",
+                sol: `const total = produtos.reduce((soma, p) => soma + p.preco, 0);
+console.log(total.toFixed(2)); // 543.80` },
+              { t: "Com `find`, encontre o produto chamado `\"Curso Node\"`.",
+                sol: `const node = produtos.find(p => p.nome === "Curso Node");` },
+              { t: "🔥 Desafio: calcule o total só dos ebooks com 10% de desconto, encadeando `filter`, `map` e `reduce`.",
+                sol: `const totalEbooks = produtos
+  .filter(p => p.tipo === "ebook")
+  .map(p => p.preco * 0.9)
+  .reduce((soma, preco) => soma + preco, 0);
+
+console.log(totalEbooks.toFixed(2)); // 44.82` }
+            ]
+          },
+          {
+            nome: "DOM e eventos",
+            porque: "Como o JavaScript mexe na página: cliques, formulários, mostrar e esconder.",
+            busca: "Curso em Vídeo JavaScript Guanabara",
+            ex: [
+              { t: "Crie um `h1` e um botão. Ao clicar no botão, o texto do `h1` muda.",
+                sol: `<h1 id="titulo">Olá</h1>
+<button id="btn">Mudar</button>
+
+<script>
+  const titulo = document.querySelector("#titulo");
+  document.querySelector("#btn").addEventListener("click", () => {
+    titulo.textContent = "Texto mudado!";
+  });
+<\/script>` },
+              { t: "Crie um contador com botões `+` e `−` e um número no meio.",
+                sol: `<button id="menos">−</button>
+<span id="valor">0</span>
+<button id="mais">+</button>
+
+<script>
+  let contador = 0;
+  const valor = document.querySelector("#valor");
+  const atualizar = () => valor.textContent = contador;
+
+  document.querySelector("#mais").addEventListener("click", () => { contador++; atualizar(); });
+  document.querySelector("#menos").addEventListener("click", () => { contador--; atualizar(); });
+<\/script>` },
+              { t: "Crie um input e um botão. Ao clicar, o texto digitado vira um item novo numa lista `ul` (e o input fica vazio).",
+                dica: "Use `document.createElement(\"li\")` e `ul.appendChild(li)`.",
+                sol: `<input id="campo" placeholder="Digite algo">
+<button id="add">Adicionar</button>
+<ul id="lista"></ul>
+
+<script>
+  const campo = document.querySelector("#campo");
+  const lista = document.querySelector("#lista");
+
+  document.querySelector("#add").addEventListener("click", () => {
+    if (!campo.value.trim()) return; // ignora vazio
+    const li = document.createElement("li");
+    li.textContent = campo.value;
+    lista.appendChild(li);
+    campo.value = "";
+  });
+<\/script>` },
+              { t: "Crie 3 cards de produto, cada um com botão \"Adicionar ao carrinho\". No topo, mostre `Carrinho (0)` e atualize o número a cada clique.",
+                dica: "Dê a mesma classe aos botões e use `querySelectorAll(...).forEach`." },
+              { t: "Crie um botão de modo escuro que liga e desliga uma classe `dark` no `body`.",
+                sol: `document.querySelector("#tema").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});` }
+            ]
+          },
+          {
+            nome: "Assíncrono: Promises, async/await, fetch ⚠️",
+            porque: "MUITO importante. Toda comunicação com servidor e pagamento usa isso.",
+            busca: "async await javascript explicado",
+            ex: [
+              { t: "Crie uma função `esperar(ms)` que retorna uma Promise. Use `await esperar(2000)` e depois mostre uma mensagem no console.",
+                sol: `const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function iniciar() {
+  console.log("Esperando...");
+  await esperar(2000);
+  console.log("Passaram 2 segundos!");
+}
+
+iniciar();` },
+              { t: "Use `fetch` em `https://fakestoreapi.com/products` e mostre no console só o título de cada produto.",
+                sol: `async function buscarProdutos() {
+  const resposta = await fetch("https://fakestoreapi.com/products");
+  const produtos = await resposta.json();
+  produtos.forEach(p => console.log(p.title));
+}
+
+buscarProdutos();` },
+              { t: "Faça a mesma busca com `try/catch`. Teste com uma URL errada e mostre uma mensagem de erro amigável.",
+                dica: "O fetch não dá erro com status 404. Verifique `resposta.ok` e use `throw` se for falso.",
+                sol: `async function buscarProdutos() {
+  try {
+    const resposta = await fetch("https://fakestoreapi.com/produtos-errado");
+    if (!resposta.ok) throw new Error("Status " + resposta.status);
+    const produtos = await resposta.json();
+    console.log(produtos);
+  } catch (erro) {
+    console.log("Não foi possível carregar os produtos:", erro.message);
+  }
+}` },
+              { t: "Mostre \"Carregando...\" na tela enquanto busca e depois troque pelos cards dos produtos (imagem, título e preço)." },
+              { t: "🔥 Desafio: busque `/products/1` e `/products/2` ao mesmo tempo com `Promise.all`.",
+                sol: `const [p1, p2] = await Promise.all([
+  fetch("https://fakestoreapi.com/products/1").then(r => r.json()),
+  fetch("https://fakestoreapi.com/products/2").then(r => r.json())
+]);
+
+console.log(p1.title, p2.title);` }
+            ]
+          },
+          {
+            nome: "Módulos: import e export",
+            porque: "Como dividir o código em vários arquivos organizados.",
+            busca: "javascript modules import export",
+            ex: [
+              { t: "Crie `utils.js` com uma função `formatarPreco` exportada e importe em `main.js`.",
+                dica: "No HTML use `<script type=\"module\" src=\"main.js\">`. Módulos não funcionam abrindo o arquivo direto: use a extensão Live Server do VS Code.",
+                sol: `// utils.js
+export function formatarPreco(valor) {
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+// main.js
+import { formatarPreco } from "./utils.js";
+console.log(formatarPreco(29.9)); // R$ 29,90` },
+              { t: "Faça um arquivo com `export default` e outro com exports nomeados. Escreva com suas palavras a diferença.",
+                sol: `// export default: só um por arquivo, importa com qualquer nome
+export default function carrinho() {}
+import meuCarrinho from "./carrinho.js";
+
+// export nomeado: vários por arquivo, importa com o nome exato entre chaves
+export const taxa = 0.1;
+import { taxa } from "./config.js";` },
+              { t: "Reorganize o projeto da vitrine em 3 arquivos: `api.js` (fetch), `carrinho.js` (lógica do carrinho) e `main.js` (junta tudo)." }
+            ]
+          }
+        ],
+        projeto: "Uma vitrine de produtos que puxa dados de uma API falsa (fakestoreapi.com) com fetch, e um carrinho salvo no localStorage."
+      },
+      {
+        titulo: "Git e GitHub",
+        semanas: "Meia semana (junto com a fase 1)",
+        descricao: "Na empresa você vai usar Git todo dia para salvar versões do código e trabalhar em equipe.",
+        topicos: [
+          {
+            nome: "Curso de Git e GitHub",
+            porque: "commit, push, pull: o básico para versionar seu código.",
+            busca: "Curso Git e GitHub Curso em Vídeo",
+            ex: [
+              { t: "Configure seu nome e e-mail no Git.",
+                sol: `git config --global user.name "Seu Nome"
+git config --global user.email "seu@email.com"` },
+              { t: "Crie uma pasta, faça `git init` e 3 commits com mudanças diferentes. Depois veja o histórico com `git log --oneline`." },
+              { t: "Crie um `.gitignore` que ignora `node_modules` e `.env`.",
+                sol: `node_modules/
+.env` },
+              { t: "Suba o projeto para um repositório novo no GitHub." }
+            ]
+          },
+          {
+            nome: "Branch, merge e pull request",
+            porque: "Como trabalhar em uma funcionalidade sem quebrar o projeto principal.",
+            busca: "git branch merge pull request explicado",
+            ex: [
+              { t: "Crie a branch `feature/rodape`, adicione um rodapé, faça commit e volte para a `main`. Veja que o rodapé \"sumiu\".",
+                sol: `git switch -c feature/rodape
+# ... edite os arquivos ...
+git add .
+git commit -m "Adiciona rodapé"
+git switch main` },
+              { t: "Faça o merge da `feature/rodape` na `main` pelo terminal.",
+                sol: `git switch main
+git merge feature/rodape` },
+              { t: "Crie outra branch, envie para o GitHub com `git push -u origin nome-da-branch`, abra um Pull Request e faça o merge pelo site." }
+            ]
+          },
+          {
+            nome: "Resolver conflitos",
+            porque: "Vai acontecer, e você precisa saber resolver sem pânico.",
+            busca: "como resolver conflito git merge",
+            ex: [
+              { t: "Provoque um conflito de propósito: altere a MESMA linha em duas branches diferentes e tente fazer o merge.",
+                dica: "O Git vai marcar o arquivo com `<<<<<<<`, `=======` e `>>>>>>>`." },
+              { t: "Resolva o conflito no VS Code (escolha uma versão ou junte as duas), faça `git add` e `git commit`." }
+            ]
+          }
+        ],
+        projeto: "Suba seus projetos da fase 1 no GitHub, cada um no seu repositório, com um README explicando o que faz."
+      },
+      {
+        titulo: "Back-end com Node.js",
+        semanas: "Semanas 4 e 5",
+        descricao: "Uma plataforma de vendas precisa de um servidor. Não dá para confiar só no navegador, porque o usuário pode alterar qualquer coisa nele.",
+        topicos: [
+          {
+            nome: "Node.js + Express",
+            porque: "Rodar JavaScript no servidor e criar suas próprias rotas.",
+            busca: "Matheus Battisti curso Node.js",
+            ex: [
+              { t: "Crie um projeto com `npm init -y`, instale o Express e faça um servidor que responde \"Olá\" na rota `/`.",
+                sol: `// npm init -y
+// npm install express
+
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Olá");
+});
+
+app.listen(3000, () => console.log("Rodando em http://localhost:3000"));` },
+              { t: "Adicione a rota `/sobre` que responde um JSON `{ nome: \"Seu nome\", cargo: \"dev\" }`.",
+                sol: `app.get("/sobre", (req, res) => {
+  res.json({ nome: "Seu nome", cargo: "dev" });
+});` },
+              { t: "Rode o servidor com `node --watch index.js` para ele reiniciar sozinho a cada mudança." }
+            ]
+          },
+          {
+            nome: "API REST (GET, POST, PUT, DELETE)",
+            porque: "O padrão de como o front-end conversa com o back-end.",
+            busca: "API REST Node Express do zero",
+            ex: [
+              { t: "Crie `GET /produtos` que retorna um array de produtos guardado numa variável." },
+              { t: "Crie `GET /produtos/:id` que retorna um produto, ou status 404 se não existir.",
+                sol: `app.get("/produtos/:id", (req, res) => {
+  const produto = produtos.find(p => p.id === Number(req.params.id));
+  if (!produto) return res.status(404).json({ erro: "Produto não encontrado" });
+  res.json(produto);
+});` },
+              { t: "Crie `POST /produtos` que recebe nome e preço no corpo e adiciona no array.",
+                dica: "Sem `app.use(express.json())`, o `req.body` vem vazio." },
+              { t: "Crie `PUT /produtos/:id` (editar) e `DELETE /produtos/:id` (excluir)." },
+              { t: "Teste todas as rotas com a extensão Thunder Client do VS Code (ou o Insomnia)." },
+              { t: "🔥 Desafio: no POST, recuse produtos sem nome ou com preço negativo (status 400)." }
+            ]
+          },
+          {
+            nome: "Variáveis de ambiente (.env)",
+            porque: "Onde ficam as senhas e chaves secretas, fora do código.",
+            busca: "dotenv node variáveis de ambiente",
+            ex: [
+              { t: "Crie um `.env` com `PORT=3000` e use `process.env.PORT` no `app.listen`.",
+                sol: `// npm install dotenv
+require("dotenv").config();
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT);` },
+              { t: "Confirme que o `.env` está no `.gitignore` e crie um `.env.example` (sem valores reais) para documentar as variáveis." }
+            ]
+          }
+        ],
+        projeto: "Uma API de produtos: criar, listar, editar e excluir ebooks e cursos."
+      },
+      {
+        titulo: "Banco de dados",
+        semanas: "Semana 6",
+        descricao: "Onde ficam guardados usuários, produtos e vendas.",
+        topicos: [
+          {
+            nome: "SQL básico",
+            porque: "Os conceitos (tabelas, SELECT, INSERT, JOIN) valem para qualquer banco.",
+            busca: "Curso MySQL Curso em Vídeo",
+            ex: [
+              { t: "Crie a tabela `produtos` com id, nome, preco e tipo.",
+                dica: "Para praticar sem instalar nada, use o site sqliteonline.com.",
+                sol: `CREATE TABLE produtos (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT NOT NULL,
+  preco REAL NOT NULL,
+  tipo TEXT NOT NULL
+);` },
+              { t: "Insira 5 produtos (ebooks e cursos).",
+                sol: `INSERT INTO produtos (nome, preco, tipo) VALUES
+  ('Ebook JS', 29.9, 'ebook'),
+  ('Curso Node', 197, 'curso');` },
+              { t: "Liste só os produtos com preço menor que 50, do mais barato para o mais caro.",
+                sol: `SELECT * FROM produtos
+WHERE preco < 50
+ORDER BY preco ASC;` },
+              { t: "Aumente em 10% o preço de todos os cursos com `UPDATE` e apague um produto com `DELETE`.",
+                sol: `UPDATE produtos SET preco = preco * 1.1 WHERE tipo = 'curso';
+DELETE FROM produtos WHERE id = 3;` }
+            ]
+          },
+          {
+            nome: "PostgreSQL + Prisma",
+            porque: "Banco e ferramenta muito usados em projetos Node modernos.",
+            busca: "Prisma ORM Node PostgreSQL tutorial",
+            ex: [
+              { t: "Instale o Prisma no projeto da API e crie o model `Produto` no `schema.prisma`.",
+                sol: `model Produto {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  preco     Decimal
+  tipo      String
+  criadoEm  DateTime @default(now())
+}` },
+              { t: "Rode a migration (`npx prisma migrate dev`) e abra o `npx prisma studio` para ver a tabela." },
+              { t: "Troque o array da sua API por `prisma.produto.findMany()` e `prisma.produto.create()`. Agora os dados não somem quando o servidor reinicia!" }
+            ]
+          },
+          {
+            nome: "Relacionamentos entre tabelas",
+            porque: "Um usuário tem muitos produtos; um pedido tem um comprador e um produto.",
+            busca: "relacionamento banco de dados um para muitos",
+            ex: [
+              { t: "No papel, desenhe as tabelas da plataforma: Usuario, Produto, Pedido. Ligue com setas quem pertence a quem." },
+              { t: "Crie o model `Usuario` com relação 1 para N com `Produto` (um vendedor tem vários produtos).",
+                sol: `model Usuario {
+  id       Int       @id @default(autoincrement())
+  nome     String
+  email    String    @unique
+  produtos Produto[]
+}
+
+model Produto {
+  id         Int     @id @default(autoincrement())
+  nome       String
+  vendedor   Usuario @relation(fields: [vendedorId], references: [id])
+  vendedorId Int
+}` },
+              { t: "Busque um usuário junto com os produtos dele usando `include`.",
+                sol: `const vendedor = await prisma.usuario.findUnique({
+  where: { id: 1 },
+  include: { produtos: true }
+});` }
+            ]
+          }
+        ],
+        projeto: "Ligue a API da fase 3 a um banco de dados de verdade."
+      },
+      {
+        titulo: "Login e segurança",
+        semanas: "Semana 7",
+        descricao: "É onde mais aparecem erros perigosos. Vale estudar com calma.",
+        topicos: [
+          {
+            nome: "Senhas com bcrypt",
+            porque: "Senha nunca é salva como texto puro no banco.",
+            busca: "bcrypt hash senha node",
+            ex: [
+              { t: "Crie `POST /cadastro` que salva o usuário com a senha transformada em hash.",
+                sol: `const bcrypt = require("bcrypt");
+
+app.post("/cadastro", async (req, res) => {
+  const { nome, email, senha } = req.body;
+  const hash = await bcrypt.hash(senha, 10);
+  const usuario = await prisma.usuario.create({ data: { nome, email, senha: hash } });
+  res.status(201).json({ id: usuario.id, nome: usuario.nome }); // nunca devolva a senha
+});` },
+              { t: "Abra o banco e confirme que a senha salva é um texto estranho, e não a senha real." },
+              { t: "Garanta que nenhuma rota devolve o campo `senha` na resposta." }
+            ]
+          },
+          {
+            nome: "Autenticação com JWT",
+            porque: "Como o sistema sabe quem está logado.",
+            busca: "autenticação JWT Node",
+            ex: [
+              { t: "Crie `POST /login` que confere a senha com `bcrypt.compare` e devolve um token JWT.",
+                sol: `const jwt = require("jsonwebtoken");
+
+app.post("/login", async (req, res) => {
+  const { email, senha } = req.body;
+  const usuario = await prisma.usuario.findUnique({ where: { email } });
+  const ok = usuario && await bcrypt.compare(senha, usuario.senha);
+  if (!ok) return res.status(401).json({ erro: "E-mail ou senha inválidos" });
+
+  const token = jwt.sign({ id: usuario.id, role: usuario.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  res.json({ token });
+});` },
+              { t: "Crie um middleware `autenticar` que lê o token do header `Authorization` e bloqueia quem não tem token válido.",
+                sol: `function autenticar(req, res, next) {
+  const token = req.headers.authorization?.replace("Bearer ", "");
+  try {
+    req.usuario = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch {
+    res.status(401).json({ erro: "Faça login" });
+  }
+}` },
+              { t: "Crie `GET /meus-produtos` protegida pelo middleware, que lista só os produtos do usuário logado." }
+            ]
+          },
+          {
+            nome: "Tipos de usuário (admin, vendedor, comprador)",
+            porque: "Cada um vê e pode fazer coisas diferentes na plataforma.",
+            busca: "controle de acesso roles node express",
+            ex: [
+              { t: "Adicione o campo `role` no usuário (`admin`, `vendedor`, `comprador`) e crie um middleware `apenas(\"admin\")`.",
+                sol: `const apenas = (...roles) => (req, res, next) => {
+  if (!roles.includes(req.usuario.role)) {
+    return res.status(403).json({ erro: "Sem permissão" });
+  }
+  next();
+};
+
+app.delete("/usuarios/:id", autenticar, apenas("admin"), excluirUsuario);` },
+              { t: "⚠️ Importante: no `PUT /produtos/:id`, garanta que o vendedor só edita produto DELE. Teste tentando editar o produto de outro usuário.",
+                dica: "Busque o produto e compare `produto.vendedorId` com `req.usuario.id`. Se for diferente, responda 403." }
+            ]
+          }
+        ],
+        alerta: "Regra de ouro: chave secreta NUNCA vai para o front-end."
+      },
+      {
+        titulo: "Front-end moderno: React + Next.js",
+        semanas: "Semanas 8 e 9",
+        descricao: "É o mais provável de o Claude usar para criar a plataforma, então você precisa saber ler esse código.",
+        topicos: [
+          {
+            nome: "React do zero",
+            porque: "Componentes, props, estado (useState) e efeitos (useEffect).",
+            busca: "Matheus Battisti curso React",
+            ex: [
+              { t: "Crie um componente `CardProduto` que recebe `nome` e `preco` por props.",
+                sol: `function CardProduto({ nome, preco }) {
+  return (
+    <div className="card">
+      <h3>{nome}</h3>
+      <p>R$ {preco.toFixed(2)}</p>
+    </div>
+  );
+}` },
+              { t: "Renderize uma lista de produtos com `map`, usando `key` em cada item." },
+              { t: "Refaça o contador da Fase 1 com `useState`." },
+              { t: "Com `useEffect`, busque os produtos da fakestoreapi quando o componente carregar e mostre na tela.",
+                sol: `const [produtos, setProdutos] = useState([]);
+
+useEffect(() => {
+  fetch("https://fakestoreapi.com/products")
+    .then(r => r.json())
+    .then(setProdutos);
+}, []); // [] = roda só uma vez` },
+              { t: "🔥 Desafio: carrinho com estado: adicionar, remover e mostrar o total." }
+            ]
+          },
+          {
+            nome: "Next.js (App Router)",
+            porque: "Framework em cima do React com rotas, servidor e SEO prontos.",
+            busca: "Matheus Battisti curso Next.js",
+            ex: [
+              { t: "Crie um projeto com `npx create-next-app@latest` e rode com `npm run dev`." },
+              { t: "Crie as páginas `/`, `/produtos` e `/produtos/[id]` (rota dinâmica)." },
+              { t: "Crie um header com `<Link>` no `layout`, que aparece em todas as páginas." },
+              { t: "Na página `/produtos`, busque os dados direto no servidor (Server Component, com `async function Page()`)." }
+            ]
+          },
+          {
+            nome: "Tailwind CSS (opcional)",
+            porque: "Muito usado para estilizar rápido, e o Claude usa bastante.",
+            busca: "Tailwind CSS curso",
+            ex: [
+              { t: "Estilize o `CardProduto` só com classes do Tailwind (borda, sombra, padding, arredondado)." },
+              { t: "Faça a lista de produtos virar grade: 1 coluna no celular, 2 no tablet e 4 no desktop.",
+                dica: "`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4`" }
+            ]
+          }
+        ],
+        projeto: "Refaça a vitrine da fase 1 em Next.js, consumindo a sua API."
+      },
+      {
+        titulo: "Pagamentos e marketplace 💰",
+        semanas: "Semana 10",
+        descricao: "O coração do projeto. Como outras pessoas também vão vender, você precisa de split de pagamento: o comprador paga, a plataforma fica com a comissão e o vendedor recebe o resto.",
+        topicos: [
+          {
+            nome: "Split de pagamento: Mercado Pago",
+            porque: "Popular no Brasil, aceita Pix e tem modelo de marketplace.",
+            busca: "Mercado Pago split de pagamento marketplace",
+            ex: [
+              { t: "Crie uma conta de desenvolvedor no Mercado Pago e pegue as credenciais de TESTE." },
+              { t: "Crie um checkout de teste para um ebook e pague com um cartão de teste da documentação." },
+              { t: "Leia a parte de marketplace/split da documentação e escreva com suas palavras como a comissão é separada." }
+            ]
+          },
+          {
+            nome: "Stripe Connect",
+            porque: "Alternativa forte para marketplaces.",
+            busca: "Stripe Connect tutorial",
+            ex: [
+              { t: "No modo teste da Stripe, crie uma conta conectada (o \"vendedor\")." },
+              { t: "Crie um checkout que cobra o comprador e separa uma taxa para a plataforma (`application_fee_amount`)." }
+            ]
+          },
+          {
+            nome: "Asaas (split)",
+            porque: "Outra opção brasileira com split e Pix.",
+            busca: "Asaas split API",
+            ex: [
+              { t: "Crie uma conta no ambiente sandbox do Asaas e gere uma cobrança Pix de teste com split." },
+              { t: "Compare Mercado Pago, Stripe e Asaas numa tabelinha: taxas, Pix, facilidade. Leve para a empresa decidir." }
+            ]
+          },
+          {
+            nome: "Webhooks de pagamento",
+            porque: "É como o sistema descobre que o pagamento foi aprovado e libera o produto.",
+            busca: "webhook pagamento Node",
+            ex: [
+              { t: "Crie `POST /webhook` que só mostra no console tudo o que chegar." },
+              { t: "Receba webhooks no seu PC com a Stripe CLI ou o ngrok.",
+                dica: "O gateway precisa de uma URL pública. Essas ferramentas criam uma que aponta para o seu localhost." },
+              { t: "Quando chegar \"pagamento aprovado\", mude o pedido no banco para `pago`." },
+              { t: "⚠️ Trate o webhook duplicado: se o mesmo aviso chegar 2 vezes, o produto não pode ser liberado 2 vezes." }
+            ]
+          },
+          {
+            nome: "Upload de arquivos (S3 / Cloudflare R2)",
+            porque: "Onde ficam guardados os ebooks em PDF.",
+            busca: "upload de arquivos S3 Node",
+            ex: [
+              { t: "Faça upload de um PDF para uma pasta local usando `multer`." },
+              { t: "Troque o destino para o Cloudflare R2 ou S3." },
+              { t: "Gere um link temporário (signed URL) de download que só funciona para quem comprou e expira em 10 minutos." }
+            ]
+          },
+          {
+            nome: "Hospedagem de vídeos (Bunny Stream / Vimeo)",
+            porque: "Para as aulas dos cursos não ficarem expostas.",
+            busca: "Bunny Stream tutorial",
+            ex: [
+              { t: "Suba um vídeo de teste e coloque o player numa página do seu Next.js." },
+              { t: "Configure para o vídeo só tocar no seu domínio." }
+            ]
+          }
+        ],
+        alerta: "Marketplace com dinheiro de terceiros envolve impostos, nota fiscal e regras do gateway. Alinhe com a empresa qual gateway usar antes de programar."
+      },
+      {
+        titulo: "Colocar no ar",
+        semanas: "Semana 11",
+        descricao: "Fazer o projeto funcionar na internet, com domínio próprio.",
+        topicos: [
+          {
+            nome: "Deploy do Next.js na Vercel",
+            porque: "O jeito mais simples de publicar um app Next.js.",
+            busca: "deploy Next.js Vercel",
+            ex: [
+              { t: "Conecte seu repositório do GitHub na Vercel e publique." },
+              { t: "Faça uma mudança, dê `git push` e veja o site atualizar sozinho." }
+            ]
+          },
+          {
+            nome: "Banco na nuvem (Neon ou Supabase)",
+            porque: "Seu banco precisa estar online também.",
+            busca: "PostgreSQL Neon Supabase deploy",
+            ex: [
+              { t: "Crie um banco gratuito no Neon ou Supabase e coloque a `DATABASE_URL` nas variáveis da Vercel." },
+              { t: "Rode as migrations no banco de produção (`npx prisma migrate deploy`)." }
+            ]
+          },
+          {
+            nome: "Domínio e variáveis em produção",
+            porque: "Ligar o domínio da empresa e configurar as chaves com segurança.",
+            busca: "configurar domínio Vercel variáveis de ambiente",
+            ex: [
+              { t: "Ligue um domínio ou subdomínio ao projeto." },
+              { t: "🏁 Teste final: no site publicado, cadastre um vendedor, crie um produto e faça uma compra em modo teste do início ao fim." }
+            ]
+          }
+        ],
+        projeto: "🎉 Plataforma no ar!"
+      }
+    ];
+
+    // ======================= INGLÊS =======================
+    const fasesEn = [
+      {
+        titulo: "Fundação: sons e frases essenciais",
+        semanas: "Semanas 1 a 4",
+        descricao: "Acertar a pronúncia desde o início e montar uma base de frases que você usa todo dia.",
+        topicos: [
+          {
+            nome: "Pronúncia: os sons que brasileiro erra",
+            porque: "TH, R, vogais longas e curtas. Corrigir agora evita vício depois.",
+            busca: "Inglês na Ponta da Língua pronúncia",
+            ex: [
+              { t: "Grave 1 minuto se apresentando em inglês (nome, idade, cidade, o que você faz). Guarde esse áudio: é seu \"antes\"." },
+              { t: "Assista uma aula sobre o som do TH e repita 10 vezes: think, three, this, that, thank you." },
+              { t: "Grave-se lendo 5 frases e compare com o áudio original. Anote o que soou diferente." }
+            ]
+          },
+          {
+            nome: "Verb to be e present simple",
+            porque: "A estrutura de 80% das frases do dia a dia.",
+            busca: "Teacher Allie verb to be present simple",
+            ex: [
+              { t: "Escreva 10 frases sobre você no presente: \"I am...\", \"I work...\", \"I study...\"." },
+              { t: "Transforme 5 delas em perguntas e 5 em negativas.",
+                dica: "Pergunta: Do you work...? / Negativa: I don't work..." },
+              { t: "Leia as 20 frases em voz alta, gravando." }
+            ]
+          },
+          {
+            nome: "As palavras e frases mais usadas (Anki)",
+            porque: "Poucas centenas de palavras cobrem a maior parte das conversas.",
+            busca: "Mairo Vergara Anki como usar",
+            ex: [
+              { t: "Instale o Anki (PC) ou AnkiDroid (Android) e assista como configurar." },
+              { t: "Crie 20 cartões com FRASES (não palavras soltas). Frente em inglês, verso em português." },
+              { t: "Revise todo dia por 7 dias seguidos, sem pular nenhum." }
+            ]
+          },
+          {
+            nome: "Frases prontas (chunks) do dia a dia",
+            porque: "Falar rápido vem de ter blocos prontos na cabeça, não de montar palavra por palavra.",
+            busca: "Mairo Vergara chunks",
+            ex: [
+              { t: "Aprenda 15 chunks: \"How's it going?\", \"I'm not sure\", \"Could you repeat that?\", \"What do you mean?\", \"Let me think\"... e coloque no Anki." },
+              { t: "Converse 10 min com o Claude no modo de voz usando os chunks.",
+                dica: "Peça: \"Let's practice English. I'm a beginner. Speak slowly, ask me simple questions, and correct my mistakes at the end.\"" }
+            ]
+          }
+        ],
+        projeto: "Fim da semana 4: grave de novo sua apresentação de 1 minuto e compare com a do dia 1."
+      },
+      {
+        titulo: "Ouvir e repetir: treinar o ouvido",
+        semanas: "Semanas 5 a 8",
+        descricao: "Agora o foco é entender inglês de verdade, na velocidade normal, e imitar como os nativos falam.",
+        topicos: [
+          {
+            nome: "Técnica de shadowing",
+            porque: "A técnica que mais acelera pronúncia e fluência: repetir junto com o áudio.",
+            busca: "shadowing technique English",
+            ex: [
+              { t: "Escolha um trecho de 1 minuto de um vídeo. Ouça 3 vezes só prestando atenção." },
+              { t: "Repita junto com o áudio 5 vezes, imitando até a entonação." },
+              { t: "Faça shadowing todo dia por 10 min nesta fase. Marque aqui quando completar 7 dias seguidos." }
+            ]
+          },
+          {
+            nome: "Past simple e futuro",
+            porque: "Contar o que aconteceu e falar de planos.",
+            busca: "Teacher Allie past simple",
+            ex: [
+              { t: "Escreva 10 frases sobre o que você fez ontem." },
+              { t: "Grave 1 minuto contando seu fim de semana." },
+              { t: "Escreva 5 frases sobre seus planos: \"I'm going to...\", \"I will...\"." }
+            ]
+          },
+          {
+            nome: "Listening: 6 Minute English (BBC)",
+            porque: "Episódios curtos, com transcrição e vocabulário explicado.",
+            busca: "BBC Learning English 6 Minute English",
+            ex: [
+              { t: "Assista 1 episódio sem legenda. Anote o que entendeu." },
+              { t: "Assista de novo com legenda em inglês e compare." },
+              { t: "Coloque 5 frases novas do episódio no Anki. Repita com mais 5 episódios nesta fase." }
+            ]
+          },
+          {
+            nome: "Phrasal verbs mais comuns",
+            porque: "get up, find out, figure out... estão em toda conversa e em todo vídeo de programação.",
+            busca: "English with Lucy phrasal verbs",
+            ex: [
+              { t: "Aprenda 15 phrasal verbs e escreva uma frase sua com cada um." },
+              { t: "Coloque as 15 frases no Anki." }
+            ]
+          }
+        ],
+        projeto: "Fim da semana 8: grave sua apresentação de novo, agora com 2 minutos, contando também o que você fez na semana."
+      },
+      {
+        titulo: "Falar de verdade",
+        semanas: "Semanas 9 a 12",
+        descricao: "Perder o medo e conversar. Errar faz parte; o importante é falar.",
+        topicos: [
+          {
+            nome: "Conversação: perder o medo",
+            porque: "Estratégias para não travar no meio da frase.",
+            busca: "Speak English With Vanessa conversation",
+            ex: [
+              { t: "Converse 15 min por dia com o Claude no modo de voz sobre temas do dia a dia.",
+                dica: "Peça: \"Be my English conversation partner. Ask me questions about my day, my work and my hobbies. After 10 minutes, list my 5 most important mistakes with corrections.\"" },
+              { t: "Anote os erros que o Claude apontar e transforme em cartões do Anki." },
+              { t: "Pense em inglês: narre mentalmente o que você está fazendo por 5 minutos, 1 vez por dia." }
+            ]
+          },
+          {
+            nome: "Present perfect",
+            porque: "Muito usado e muito confuso para brasileiro: \"I have worked...\".",
+            busca: "Teacher Allie present perfect",
+            ex: [
+              { t: "Escreva 10 frases com \"I have...\" sobre suas experiências (\"I have never been to...\")." },
+              { t: "Peça ao Claude 10 frases para você completar com past simple ou present perfect, e corrigir." }
+            ]
+          },
+          {
+            nome: "Connected speech (como nativo fala rápido)",
+            porque: "\"Wanna\", \"gonna\", sons que se juntam. É por isso que você não entende filme.",
+            busca: "Rachel's English connected speech",
+            ex: [
+              { t: "Assista uma aula de connected speech e faça shadowing de um trecho." },
+              { t: "Assista 1 episódio de série que você já conhece com legenda em inglês." }
+            ]
+          }
+        ],
+        projeto: "Fim da semana 12: grave 3 minutos de conversa e compare com o áudio do dia 1. Esse é o seu resultado! 🎯"
+      },
+      {
+        titulo: "Inglês para devs",
+        semanas: "Contínuo (a partir da semana 4)",
+        descricao: "Juntar os dois estudos: programação em inglês abre vagas melhores e documentação muito mais completa.",
+        topicos: [
+          {
+            nome: "Vocabulário de programação",
+            porque: "deploy, bug, merge, request, feature, issue... você já usa, agora aprenda a falar sobre eles.",
+            busca: "English for developers vocabulary",
+            ex: [
+              { t: "Crie 30 cartões no Anki com frases de programação: \"I fixed a bug in the login\", \"I'm working on a new feature\"." },
+              { t: "Escreva as mensagens dos seus commits em inglês a partir de hoje." }
+            ]
+          },
+          {
+            nome: "Ler documentação em inglês",
+            porque: "A documentação oficial é sempre mais completa e atualizada em inglês.",
+            busca: "how to read programming documentation",
+            ex: [
+              { t: "Leia a página de `Array.prototype.map` no MDN em inglês. Anote palavras novas." },
+              { t: "Toda vez que pesquisar uma dúvida de código, pesquise em inglês primeiro." }
+            ]
+          },
+          {
+            nome: "Vídeos de programação em inglês",
+            porque: "Treina o ouvido e o código ao mesmo tempo.",
+            busca: "Fireship 100 seconds",
+            ex: [
+              { t: "Assista 3 vídeos \"in 100 Seconds\" do Fireship com legenda em inglês." },
+              { t: "Assista uma aula do freeCodeCamp sobre algo que você já estudou em português." }
+            ]
+          },
+          {
+            nome: "Explicar seu código em inglês",
+            porque: "Treino direto para entrevistas e para trabalhar com times de fora.",
+            busca: "how to explain your project in English interview",
+            ex: [
+              { t: "Grave 2 minutos explicando em inglês um projeto que você fez (o que faz, tecnologias, maior desafio)." },
+              { t: "Peça ao Claude uma simulação de entrevista de emprego para dev júnior em inglês.",
+                dica: "Peça: \"Act as an interviewer for a junior web developer position. Ask me one question at a time and give feedback on my English after each answer.\"" }
+            ]
+          }
+        ]
+      }
+    ];
+
+    // ======================= CANAIS =======================
+    const canaisDev = [
+      { nome: "Rocketseat", sobre: "Ecossistema JavaScript moderno: Node, React, Next.", url: "https://www.youtube.com/@rocketseat" },
+      { nome: "Matheus Battisti (Hora de Codar)", sobre: "Cursos completos e gratuitos de JS, Node, React e Next.", url: "https://www.youtube.com/@MatheusBattisti" },
+      { nome: "Curso em Vídeo", sobre: "Fundamentos muito bem explicados pelo Guanabara.", url: "https://www.youtube.com/@cursoemvideo" },
+      { nome: "Otávio Miranda", sobre: "JavaScript explicado com profundidade.", url: "https://www.youtube.com/@OtavioMiranda" },
+      { nome: "Filipe Deschamps", sobre: "Visão de mercado e tecnologia.", url: "https://www.youtube.com/@FilipeDeschamps" },
+      { nome: "Código Fonte TV", sobre: "Conceitos de programação de forma leve.", url: "https://www.youtube.com/@codigofontetv" },
+      { nome: "Fireship", sobre: "Em inglês (ative a legenda): conceitos em poucos minutos.", url: "https://www.youtube.com/@Fireship" },
+      { nome: "freeCodeCamp", sobre: "Em inglês: cursos gigantes e completos.", url: "https://www.youtube.com/@freecodecamp" }
+    ];
+
+    const canaisEn = [
+      { nome: "Mairo Vergara", sobre: "Método para brasileiros: Anki, chunks e aprender sozinho.", url: "https://www.youtube.com/@MairoVergara" },
+      { nome: "Teacher Allie", sobre: "Gramática explicada em português, de forma simples.", url: "https://www.youtube.com/@teacherallie" },
+      { nome: "Inglês na Ponta da Língua", sobre: "Pronúncia e expressões para brasileiros.", url: "https://www.youtube.com/@inglesnapontadalingua" },
+      { nome: "BBC Learning English", sobre: "6 Minute English: listening curto com transcrição.", url: "https://www.youtube.com/@bbclearningenglish" },
+      { nome: "Rachel's English", sobre: "Pronúncia americana e connected speech.", url: "https://www.youtube.com/@rachelsenglish" },
+      { nome: "English with Lucy", sobre: "Vocabulário, phrasal verbs e pronúncia.", url: "https://www.youtube.com/@EnglishwithLucy" },
+      { nome: "Speak English With Vanessa", sobre: "Conversação e inglês do dia a dia.", url: "https://www.youtube.com/@SpeakEnglishWithVanessa" }
+    ];
+
+    // ======================= FUNÇÕES =======================
+
+    // Impede que o texto vire HTML (por causa de < e > nos códigos)
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    // Texto entre crases vira <code>
+    const fmt = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
+
+    // ---------- Progresso salvo no navegador ----------
+    const CHAVE = "rotadev-progresso";
+
+    function carregarProgresso() {
+      try { return JSON.parse(localStorage.getItem(CHAVE)) || {}; }
+      catch { return {}; }
+    }
+
+    function salvarProgresso() {
+      try { localStorage.setItem(CHAVE, JSON.stringify(progresso)); }
+      catch { /* se o navegador bloquear, a página continua funcionando */ }
+    }
+
+    let progresso = carregarProgresso();
+
+    // ---------- Monta uma trilha (programação ou inglês) ----------
+    function montarTrilha(fases, prefixo, containerId) {
+      const area = document.getElementById(containerId);
+
+      area.innerHTML = fases.map((fase, i) => `
+        <article class="phase">
+          <div class="phase-head">
+            <div class="phase-meta">
+              <span class="pill num">Fase ${i + 1}</span>
+              <span class="pill">${fase.semanas}</span>
+            </div>
+            <h3>${fase.titulo}</h3>
+            <p>${fase.descricao}</p>
+          </div>
+          <ul class="topics">
+            ${fase.topicos.map((t, j) => montarTopico(t, `${prefixo}f${i}-t${j}`)).join("")}
+          </ul>
+          ${fase.projeto ? `<div class="project"><b>🛠️ Projeto:</b> ${fase.projeto}</div>` : ""}
+          ${fase.alerta ? `<div class="alert"><b>⚠️ Atenção:</b> ${fase.alerta}</div>` : ""}
+        </article>
+      `).join("");
+    }
+
+    function montarTopico(t, id) {
+      const feito = progresso[id] ? "checked" : "";
+      const exercicios = t.ex || [];
+
+      return `
+        <li class="topic-item">
+          <div class="topic ${feito ? "done" : ""}">
+            <input type="checkbox" id="${id}" ${feito} aria-label="Marcar aula como assistida">
+            <label class="info" for="${id}">
+              <div class="name">${t.nome}</div>
+              <div class="why">${t.porque}</div>
+            </label>
+            <div class="actions">
+              <a class="watch" href="${yt(t.busca)}" target="_blank" rel="noopener">▶ Assistir</a>
+              ${exercicios.length ? `
+                <button class="practice" aria-expanded="false" aria-controls="${id}-panel">
+                  📝 Praticar <span data-count="${id}"></span>
+                </button>` : ""}
+            </div>
+          </div>
+          ${exercicios.length ? `
+            <div class="ex-panel" id="${id}-panel" hidden>
+              <div class="ex-title">Exercícios: tente sozinho antes de ver a solução</div>
+              <ol class="ex-list">
+                ${exercicios.map((e, k) => montarExercicio(e, `${id}-e${k}`)).join("")}
+              </ol>
+            </div>` : ""}
+        </li>`;
+    }
+
+    function montarExercicio(e, id) {
+      const feito = progresso[id] ? "checked" : "";
+      return `
+        <li class="ex ${feito ? "done" : ""}">
+          <div class="ex-row">
+            <input type="checkbox" id="${id}" ${feito}>
+            <label for="${id}">${fmt(e.t)}</label>
+          </div>
+          ${e.dica ? `<details><summary>💡 Dica</summary><p>${fmt(e.dica)}</p></details>` : ""}
+          ${e.sol ? `<details class="sol"><summary>✅ Ver solução</summary><pre><code>${esc(e.sol)}</code></pre></details>` : ""}
+        </li>`;
+    }
+
+    function montarCanais(canais, containerId) {
+      document.getElementById(containerId).innerHTML = canais.map(c => `
+        <a class="card channel" href="${c.url}" target="_blank" rel="noopener">
+          <div class="icon">📺</div>
+          <h3>${c.nome}</h3>
+          <p>${c.sobre}</p>
+          <span class="go">Abrir canal →</span>
+        </a>
+      `).join("");
+    }
+
+    // ---------- Contadores e barras ----------
+    function atualizarTrilha(trilha) {
+      const area = document.getElementById(`${trilha}-phases`);
+      const aulas = [...area.querySelectorAll(".topic input")];
+      const exs = [...area.querySelectorAll(".ex input")];
+      const aulasFeitas = aulas.filter(c => c.checked).length;
+      const exsFeitos = exs.filter(c => c.checked).length;
+
+      document.getElementById(`${trilha}-progress-text`).textContent =
+        `Aulas ${aulasFeitas}/${aulas.length} · Exercícios ${exsFeitos}/${exs.length}`;
+
+      const total = aulas.length + exs.length;
+      document.getElementById(`${trilha}-progress-bar`).style.width =
+        ((aulasFeitas + exsFeitos) / total * 100) + "%";
+
+      // Contador "3/5" no botão Praticar de cada tópico
+      area.querySelectorAll("[data-count]").forEach(span => {
+        const caixas = [...document.querySelectorAll(`#${span.dataset.count}-panel .ex input`)];
+        span.textContent = `${caixas.filter(c => c.checked).length}/${caixas.length}`;
+      });
+    }
+
+    function ligarEventos(trilha) {
+      const area = document.getElementById(`${trilha}-phases`);
+
+      area.addEventListener("change", (e) => {
+        if (e.target.type !== "checkbox") return;
+        progresso[e.target.id] = e.target.checked;
+        e.target.closest(".topic, .ex").classList.toggle("done", e.target.checked);
+        salvarProgresso();
+        atualizarTrilha(trilha);
+      });
+
+      area.addEventListener("click", (e) => {
+        const botao = e.target.closest(".practice");
+        if (!botao) return;
+        const painel = document.getElementById(botao.getAttribute("aria-controls"));
+        const abrir = painel.hidden;
+        painel.hidden = !abrir;
+        botao.setAttribute("aria-expanded", abrir);
+      });
+    }
+
+    document.querySelectorAll("[data-reset]").forEach(botao => {
+      botao.addEventListener("click", () => {
+        const trilha = botao.dataset.reset;
+        const nome = trilha === "dev" ? "programação" : "inglês";
+        if (!confirm(`Zerar todo o progresso de ${nome}?`)) return;
+
+        document.querySelectorAll(`#${trilha}-phases input[type=checkbox]`).forEach(c => {
+          c.checked = false;
+          delete progresso[c.id];
+          c.closest(".topic, .ex").classList.remove("done");
+        });
+        salvarProgresso();
+        atualizarTrilha(trilha);
+      });
+    });
+
+    // ---------- Inicia tudo ----------
+    // O prefixo "" mantém o progresso que você já tinha marcado na versão anterior
+    montarTrilha(fasesDev, "", "dev-phases");
+    montarTrilha(fasesEn, "en-", "en-phases");
+    montarCanais(canaisDev, "dev-channels");
+    montarCanais(canaisEn, "en-channels");
+    ["dev", "en"].forEach(t => { ligarEventos(t); atualizarTrilha(t); });
+  </script>
+</body>
+</html>
