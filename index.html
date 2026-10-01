@@ -125,6 +125,44 @@
     .reset { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-size: .85rem; }
     .reset:hover { color: var(--text); }
 
+    /* ---------- Sincronização ---------- */
+    .sync-chip {
+      flex-shrink: 0; text-decoration: none; font-size: .82rem; font-weight: 600;
+      padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border);
+      color: var(--muted); white-space: nowrap;
+    }
+    .sync-chip[data-estado="ok"] { color: var(--ok); border-color: rgba(52, 211, 153, .5); }
+    .sync-chip[data-estado="salvando"] { color: var(--accent-2); }
+    .sync-chip[data-estado="erro"] { color: var(--warn); border-color: rgba(251, 191, 36, .5); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    .sync-box {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; display: grid; gap: 18px;
+    }
+    .sync-box[hidden] { display: none; }
+    .sync-box p { color: var(--muted); }
+    .sync-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .sync-box input {
+      flex: 1; min-width: 200px; padding: 12px 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border); color: var(--text);
+      font-family: "JetBrains Mono", monospace; font-size: 1rem;
+    }
+    .sync-box input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    .sync-btn {
+      padding: 12px 20px; border-radius: 10px; border: none; cursor: pointer;
+      background: var(--accent); color: #fff; font: inherit; font-weight: 600;
+    }
+    .sync-btn.sec { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .sync-btn:hover { opacity: .9; }
+    .sync-code {
+      font-family: "JetBrains Mono", monospace; font-size: clamp(1.2rem, 5vw, 1.8rem);
+      letter-spacing: .05em; color: var(--accent-2);
+      background: var(--bg); border: 1px dashed var(--border); border-radius: 10px; padding: 10px 16px;
+    }
+    .sync-or { text-align: center; color: var(--muted); font-size: .85rem; }
+    .sync-msg { font-size: .9rem; min-height: 1.4em; }
+
     /* ---------- Fases ---------- */
     .phase {
       background: var(--card); border: 1px solid var(--border);
@@ -218,6 +256,9 @@
       .project, .alert { margin: 0 16px 16px; }
       .progress-box { top: 66px; }
     }
+    @media (max-width: 460px) {
+      nav ul { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -225,12 +266,15 @@
   <header>
     <nav class="container">
       <a href="#" class="logo">Rota<span>Dev</span></a>
-      <ul>
-        <li class="hide-sm"><a href="#como-estudar">Como estudar</a></li>
-        <li><a href="#cronograma">Programação</a></li>
-        <li><a href="#ingles">Inglês</a></li>
-        <li class="hide-sm"><a href="#canais">Canais</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul>
+          <li class="hide-sm"><a href="#como-estudar">Como estudar</a></li>
+          <li><a href="#cronograma">Programação</a></li>
+          <li><a href="#ingles">Inglês</a></li>
+          <li class="hide-sm"><a href="#canais">Canais</a></li>
+        </ul>
+        <a href="#sincronizar" class="sync-chip" id="sync-chip" data-estado="off">☁️ Sincronizar</a>
+      </div>
     </nav>
   </header>
 
@@ -253,6 +297,52 @@
           <span>React/Next</span><span class="arrow">→</span>
           <span>Pagamento</span><span class="arrow">→</span>
           <span>Deploy</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SINCRONIZAR -->
+    <section id="sincronizar" style="padding-top:0">
+      <div class="container">
+        <h2 class="section-title">☁️ Sincronizar entre aparelhos</h2>
+        <p class="section-sub">Marque no computador e continue no celular. Crie um código uma vez e digite o mesmo código em todos os seus aparelhos.</p>
+
+        <!-- Aparece quando este aparelho ainda não está sincronizado -->
+        <div class="sync-box" id="sync-desligado">
+          <div>
+            <b>Primeira vez?</b>
+            <p>Crie seu código aqui. O que você já marcou neste aparelho vai junto para a nuvem.</p>
+          </div>
+          <div class="sync-row">
+            <button class="sync-btn" id="sync-criar">Criar meu código</button>
+          </div>
+          <div class="sync-or">ou</div>
+          <div>
+            <b>Já tem um código?</b>
+            <p>Digite o código que aparece no seu outro aparelho.</p>
+          </div>
+          <form class="sync-row" id="sync-form">
+            <input id="sync-input" placeholder="ex.: abcd-efgh-jkmn" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <button class="sync-btn" type="submit">Conectar</button>
+          </form>
+          <div class="sync-msg" id="sync-msg-desligado"></div>
+        </div>
+
+        <!-- Aparece quando este aparelho já está sincronizado -->
+        <div class="sync-box" id="sync-ligado" hidden>
+          <div>
+            <b>Seu código de sincronização</b>
+            <p>Digite este código no celular (ou em outro navegador). <b>Guarde-o bem</b>: quem tiver o código vê e altera seu progresso.</p>
+          </div>
+          <div class="sync-row">
+            <span class="sync-code" id="sync-codigo"></span>
+            <button class="sync-btn sec" id="sync-copiar">Copiar</button>
+          </div>
+          <div class="sync-msg" id="sync-msg-ligado"></div>
+          <div class="sync-row">
+            <button class="sync-btn sec" id="sync-agora">Sincronizar agora</button>
+            <button class="sync-btn sec" id="sync-sair">Desconectar este aparelho</button>
+          </div>
         </div>
       </div>
     </section>
@@ -1218,19 +1308,37 @@ useEffect(() => {
     const fmt = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
 
     // ---------- Progresso salvo no navegador ----------
+    // progresso: { id: true/false }   → o que está marcado
+    // tempos:    { id: data em ms }   → quando cada item foi alterado (para sincronizar)
     const CHAVE = "rotadev-progresso";
+    const CHAVE_TEMPOS = "rotadev-tempos";
+    const CHAVE_CODIGO = "rotadev-codigo";
 
-    function carregarProgresso() {
-      try { return JSON.parse(localStorage.getItem(CHAVE)) || {}; }
-      catch { return {}; }
+    function ler(chave, padrao) {
+      try { return JSON.parse(localStorage.getItem(chave)) ?? padrao; }
+      catch { return padrao; }
     }
 
-    function salvarProgresso() {
-      try { localStorage.setItem(CHAVE, JSON.stringify(progresso)); }
+    function gravar(chave, valor) {
+      try { localStorage.setItem(chave, JSON.stringify(valor)); }
       catch { /* se o navegador bloquear, a página continua funcionando */ }
     }
 
-    let progresso = carregarProgresso();
+    function salvarProgresso() {
+      gravar(CHAVE, progresso);
+      gravar(CHAVE_TEMPOS, tempos);
+    }
+
+    let progresso = ler(CHAVE, {});
+    let tempos = ler(CHAVE_TEMPOS, {});
+
+    // Marca ou desmarca um item, guarda a hora e agenda o envio para a nuvem
+    function marcar(id, valor) {
+      progresso[id] = valor;
+      tempos[id] = Date.now();
+      salvarProgresso();
+      agendarSincronizacao();
+    }
 
     // ---------- Monta uma trilha (programação ou inglês) ----------
     function montarTrilha(fases, prefixo, containerId) {
@@ -1336,9 +1444,8 @@ useEffect(() => {
 
       area.addEventListener("change", (e) => {
         if (e.target.type !== "checkbox") return;
-        progresso[e.target.id] = e.target.checked;
+        marcar(e.target.id, e.target.checked);
         e.target.closest(".topic, .ex").classList.toggle("done", e.target.checked);
-        salvarProgresso();
         atualizarTrilha(trilha);
       });
 
@@ -1360,13 +1467,156 @@ useEffect(() => {
 
         document.querySelectorAll(`#${trilha}-phases input[type=checkbox]`).forEach(c => {
           c.checked = false;
-          delete progresso[c.id];
+          // Guarda "false" (em vez de apagar) para o outro aparelho também zerar
+          if (progresso[c.id]) marcar(c.id, false);
           c.closest(".topic, .ex").classList.remove("done");
         });
-        salvarProgresso();
         atualizarTrilha(trilha);
       });
     });
+
+    // Atualiza todas as caixinhas da tela a partir do objeto "progresso"
+    function mostrarProgressoNaTela() {
+      document.querySelectorAll(".topic input, .ex input").forEach(c => {
+        c.checked = !!progresso[c.id];
+        c.closest(".topic, .ex").classList.toggle("done", c.checked);
+      });
+      ["dev", "en"].forEach(atualizarTrilha);
+    }
+
+    // ======================= SINCRONIZAÇÃO =======================
+    let codigo = ler(CHAVE_CODIGO, null);
+    let sincronizando = false;
+    let pendente = false;
+    let timer;
+
+    // Mesmo critério do servidor: para cada item, vence a alteração mais recente
+    function juntar(a, b) {
+      const p = { ...a.progresso };
+      const t = { ...a.tempos };
+      for (const id of Object.keys(b.progresso)) {
+        const tempoB = b.tempos[id] || 0;
+        if (!(id in p) || tempoB > (t[id] || 0)) {
+          p[id] = b.progresso[id];
+          t[id] = tempoB;
+        }
+      }
+      return { progresso: p, tempos: t };
+    }
+
+    // Código fácil de digitar no celular: sem 0/o, 1/l/i
+    function gerarCodigo() {
+      const letras = "abcdefghjkmnpqrstuvwxyz23456789";
+      const aleatorios = crypto.getRandomValues(new Uint32Array(12));
+      const chars = [...aleatorios].map(n => letras[n % letras.length]).join("");
+      return chars.match(/.{4}/g).join("-"); // ex.: k7fz-q9xm-3hpa
+    }
+
+    function definirStatus(estado, mensagem) {
+      const chip = document.getElementById("sync-chip");
+      const textos = {
+        off: "☁️ Sincronizar",
+        salvando: "⏳ Salvando...",
+        ok: "✅ Sincronizado",
+        erro: "⚠️ Sem conexão"
+      };
+      chip.dataset.estado = estado;
+      chip.textContent = textos[estado];
+      if (mensagem !== undefined) {
+        document.getElementById("sync-msg-ligado").textContent = mensagem;
+      }
+    }
+
+    function mostrarPainelSync() {
+      document.getElementById("sync-desligado").hidden = !!codigo;
+      document.getElementById("sync-ligado").hidden = !codigo;
+      document.getElementById("sync-codigo").textContent = codigo || "";
+      if (!codigo) definirStatus("off");
+    }
+
+    // Envia o progresso deste aparelho e recebe o progresso juntado de todos
+    async function sincronizar() {
+      if (!codigo) return;
+      if (sincronizando) { pendente = true; return; }
+
+      sincronizando = true;
+      definirStatus("salvando");
+      try {
+        const resposta = await fetch("/api/progresso", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ codigo, progresso, tempos })
+        });
+        if (!resposta.ok) throw new Error("Status " + resposta.status);
+
+        const daNuvem = await resposta.json();
+        // Junta de novo com o local, para não perder o que foi marcado durante o envio
+        ({ progresso, tempos } = juntar({ progresso, tempos }, daNuvem));
+        salvarProgresso();
+        mostrarProgressoNaTela();
+
+        const hora = new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+        definirStatus("ok", `✅ Tudo sincronizado às ${hora}.`);
+      } catch {
+        definirStatus("erro", "⚠️ Sem conexão com a nuvem. Seu progresso está salvo neste aparelho e será enviado quando a conexão voltar.");
+      } finally {
+        sincronizando = false;
+        if (pendente) { pendente = false; sincronizar(); }
+      }
+    }
+
+    // Espera 1 segundo sem cliques antes de enviar (evita uma requisição por clique)
+    function agendarSincronizacao() {
+      if (!codigo) return;
+      clearTimeout(timer);
+      timer = setTimeout(sincronizar, 1000);
+    }
+
+    function conectar(novoCodigo) {
+      codigo = novoCodigo;
+      gravar(CHAVE_CODIGO, codigo);
+      mostrarPainelSync();
+      sincronizar();
+    }
+
+    document.getElementById("sync-criar").addEventListener("click", () => {
+      conectar(gerarCodigo());
+    });
+
+    document.getElementById("sync-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const digitado = document.getElementById("sync-input").value.trim().toLowerCase().replace(/\s+/g, "");
+      const msg = document.getElementById("sync-msg-desligado");
+      if (!/^[a-z0-9-]{12,40}$/.test(digitado)) {
+        msg.textContent = "⚠️ Código inválido. Ele tem o formato abcd-efgh-jkmn.";
+        return;
+      }
+      msg.textContent = "";
+      conectar(digitado);
+    });
+
+    document.getElementById("sync-copiar").addEventListener("click", async (e) => {
+      try {
+        await navigator.clipboard.writeText(codigo);
+        e.target.textContent = "Copiado!";
+        setTimeout(() => e.target.textContent = "Copiar", 1500);
+      } catch { /* sem permissão para copiar: o código continua visível na tela */ }
+    });
+
+    document.getElementById("sync-agora").addEventListener("click", sincronizar);
+
+    document.getElementById("sync-sair").addEventListener("click", () => {
+      if (!confirm("Desconectar este aparelho? Seu progresso continua salvo aqui e na nuvem.")) return;
+      codigo = null;
+      try { localStorage.removeItem(CHAVE_CODIGO); } catch {}
+      mostrarPainelSync();
+    });
+
+    // Quando você volta para a aba (ex.: trocou de app no celular), busca novidades
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") sincronizar();
+    });
+    window.addEventListener("online", sincronizar);
 
     // ---------- Inicia tudo ----------
     // O prefixo "" mantém o progresso que você já tinha marcado na versão anterior
@@ -1375,6 +1625,8 @@ useEffect(() => {
     montarCanais(canaisDev, "dev-channels");
     montarCanais(canaisEn, "en-channels");
     ["dev", "en"].forEach(t => { ligarEventos(t); atualizarTrilha(t); });
+    mostrarPainelSync();
+    sincronizar();
   </script>
 </body>
 </html>
