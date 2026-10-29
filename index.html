@@ -1093,6 +1093,47 @@ useEffect(() => {
           }
         ],
         projeto: "🎉 Plataforma no ar!"
+      },
+      {
+        titulo: "Jogos 2D com PixiJS 🎮",
+        semanas: "Extra · 1 a 2 semanas",
+        descricao: "Para a vaga de Front-end Junior da Jungle Gaming (React, TypeScript e PixiJS). Os vídeos são em inglês: ative Legendas → Traduzir automaticamente → Português.",
+        topicos: [
+          {
+            nome: "Aula 1 · Fundamentos do PixiJS (Wael Yasmina)",
+            porque: "18 capítulos: sprites, ticker (loop do jogo), mouse/teclado, spritesheets, fundo infinito e som. Use os capítulos para não se perder.",
+            video: "https://www.youtube.com/watch?v=ajaduDDePIY",
+            busca: "Tutorial de Pixi.js para Iniciantes Wael Yasmina",
+            ex: [
+              { t: "Capítulos 1 a 6: configure o projeto e desenhe formas e texto na tela." },
+              { t: "Capítulos 7 a 10: carregue uma imagem como sprite e mova com o teclado." },
+              { t: "Capítulos 11 a 15: anime um personagem com spritesheet e faça um fundo infinito." },
+              { t: "Capítulos 16 a 18: adicione som e filtros." }
+            ]
+          },
+          {
+            nome: "Aula 2 · Mini Snake Game (Hugo Svirak)",
+            porque: "Do zero até um jogo da cobrinha jogável.",
+            video: "https://www.youtube.com/watch?v=oVMlcVO-oEE",
+            busca: "Pixi.js for Complete Beginners Tutorial Mini Snake Game",
+            ex: [
+              { t: "Faça o Snake seguindo o vídeo até ele funcionar." },
+              { t: "Sem olhar o vídeo, adicione um placar e um recorde salvo no `localStorage`." },
+              { t: "Adicione níveis de dificuldade (a velocidade aumenta) e controles por toque no celular." }
+            ]
+          },
+          {
+            nome: "Portfólio · Snake com React + TypeScript no ar",
+            porque: "A vaga pede um protótipo jogável. Este é o seu.",
+            busca: "PixiJS React TypeScript Vite",
+            ex: [
+              { t: "Coloque o jogo dentro de um app React + TypeScript (Vite) e personalize o tema (ex.: barbearia)." },
+              { t: "Faça o deploy no Netlify e coloque o link no portfólio e no LinkedIn." },
+              { t: "Envie o link para a Jungle Gaming junto com a candidatura." }
+            ]
+          }
+        ],
+        projeto: "Seu Snake personalizado em React + TypeScript + PixiJS, publicado e com link na candidatura."
       }
     ];
 
@@ -1376,7 +1417,7 @@ useEffect(() => {
               <div class="why">${t.porque}</div>
             </label>
             <div class="actions">
-              <a class="watch" href="${yt(t.busca)}" target="_blank" rel="noopener">▶ Assistir</a>
+              <a class="watch" href="${t.video || yt(t.busca)}" target="_blank" rel="noopener">▶ Assistir</a>
               ${exercicios.length ? `
                 <button class="practice" aria-expanded="false" aria-controls="${id}-panel">
                   📝 Praticar <span data-count="${id}"></span>
